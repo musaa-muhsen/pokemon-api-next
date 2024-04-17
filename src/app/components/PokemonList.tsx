@@ -29,7 +29,7 @@ export default function PokemonList() {
   };
 
   return (
-    <div>
+    <>
 <TextField.Root 
     value={searchString}
     onKeyDown={handleKeyDown}
@@ -39,7 +39,10 @@ export default function PokemonList() {
     size="3" 
     variant="soft"
   >
-  <TextField.Slot   onClick={onClick}>
+  <TextField.Slot  
+    onClick={onClick} 
+    //className="hover:bg-blue-600  text-white  font-bold py-2 px-4 rounded-full cursor-pointer"
+  >
     <MagnifyingGlassIcon height="16" width="16" />
   </TextField.Slot>
 </TextField.Root>
@@ -66,7 +69,7 @@ export default function PokemonList() {
   </Card>
 </Box> */}
 
-      <div className="flex gap-2">
+      {/* <div className="flex gap-2">
         <input
           type="text"
           value={searchString}
@@ -79,8 +82,25 @@ export default function PokemonList() {
         >
           Search
         </button>
-      </div>
-      <div className="text-4xl py-5">Names: {pokemonNames.join(", ")}</div>
-    </div>
+      </div> */}
+      <div className="grid grid-cols-4 gap-4 mt-10">
+        {pokemonNames.map((name,index) => {
+          return (
+          <Link key={name} href={`/pokemon/${name}`} className="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg">
+           
+              <Image
+                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${index + 1}.png`}
+                alt={name}
+                width={300}
+                height={300}
+              />
+              <div className="text-lg font-semibold text-gray-800">{name}</div>
+         
+          </Link>
+          );
+})}
+</div>
+      {/* <div className="text-4xl py-5">Names: {pokemonNames.join(", ")}</div> */}
+    </>
   );
 }
