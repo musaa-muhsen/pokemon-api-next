@@ -87,13 +87,16 @@ const PokemonPage = async ({
      >
 <div className="border-gray-300 border flex flex-col pr-5 pl-5 mx-auto w-[400px]  py-6 bg-white overflow-hidden rounded-2xl	">
     <h1 className=" text-2xl font-bold mb-2 capitalize">{pokemon?.name}</h1>
-     <Image 
+     {pokemon?.imageUrl && <Image 
      width={100}
       height={100}
      className="self-end block w-3/5 h-64 object-contain mb-6" 
-     src={pokemon.imageUrl} 
-     alt={pokemon.name} 
-     /> 
+     src={pokemon?.imageUrl} 
+     alt={pokemon?.name} 
+     style={{
+      objectFit: 'contain', 
+    }}
+     /> }
 
     <h2 className="text-xl font-bold mb-2">Stats</h2>
     <ul className="mb-4">
