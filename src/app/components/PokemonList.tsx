@@ -49,7 +49,7 @@ export default function PokemonList() {
     value={searchString}
     onKeyDown={handleKeyDown}
     onChange={(e) => setSearchString(e.target.value)}
-    placeholder="Search the docs….." 
+    placeholder="Search the pokemons..." 
     radius="full" 
     size="3" 
     variant="soft"
