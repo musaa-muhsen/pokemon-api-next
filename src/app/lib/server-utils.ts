@@ -17,7 +17,7 @@ export async function searchResults(search: string) {
         console.log('@@@@item map',item)
         return item
       })
-      .slice(0, 40);
+      .slice(0, 200);
       
   }
 
@@ -42,9 +42,9 @@ export async function searchResults(search: string) {
   
     return {
       data: data,
-      name: data.name,
-      order: data.order,
-      imageUrl: data.sprites.other["official-artwork"].front_default,
+      name: data?.name,
+      id: data?.id,
+      imageUrl: data?.sprites.other["official-artwork"].front_default,
       stats,
       abilities,
     };

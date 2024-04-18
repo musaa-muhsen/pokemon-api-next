@@ -7,7 +7,7 @@ import {ArrowLeftIcon} from '@radix-ui/react-icons';
 
 export const ClientLink = () => {
   return (
-    <Link href="/" className="pt-6 ml-12 block w-5">
+    <Link href="/" className="fixed block w-5 inset-6">
       <IconButton variant="solid" >
         <ArrowLeftIcon width="18" height="18" />
        </IconButton>
