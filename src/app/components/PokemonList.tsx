@@ -2,35 +2,42 @@
 
 import { useState, useEffect } from "react";
 import {searchResults} from "@/app/lib/server-utils";
+import { Pokemon } from "@/app/lib/types";
 import Image from "next/image";
 import Link from "next/link";
-import {TextField, Box , CheckboxCards, Flex, Text, Avatar, Card} from '@radix-ui/themes';
+import {IconButton,TextField, Box , CheckboxCards, Flex, Text, Avatar, Card} from '@radix-ui/themes';
 import {MagnifyingGlassIcon} from '@radix-ui/react-icons';
 
 
 export default function PokemonList() {
   
-  const [pokemonNames, setPokemonNames] = useState<string[]>([]);
+  const [pokemon, setPokemon] = useState<Pokemon[]>([]);
   const [searchString, setSearchString] = useState("");
-  console.log("searchString", searchString);
+  console.log('pokemon',pokemon)
+  //console.log("pokemonNames", pokemonNames);
+
+ // console.log('searchResults', searchResults)
+  
 
   useEffect(() => {
-    searchResults("").then((names) => setPokemonNames(names));
+    searchResults("").then((p) => setPokemon(p));
   }, []);
 
   const onClick = async () => {
-    setPokemonNames(await searchResults(searchString));
+    setPokemon(await searchResults(searchString));
   };
 
   const handleKeyDown = async (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      setPokemonNames(await searchResults(searchString));
+      setPokemon(await searchResults(searchString));
     }
   };
 
   return (
     <>
 <TextField.Root 
+  // make center and max-width of 400px and width 90%
+  className=" w-90 mx-auto max-w-2xl"
     value={searchString}
     onKeyDown={handleKeyDown}
     onChange={(e) => setSearchString(e.target.value)}
@@ -40,10 +47,17 @@ export default function PokemonList() {
     variant="soft"
   >
   <TextField.Slot  
-    onClick={onClick} 
-    //className="hover:bg-blue-600  text-white  font-bold py-2 px-4 rounded-full cursor-pointer"
+    side="right"
+    onClick={onClick}
+    gap="3"    
+    className="hover:bg-blue-300  text-white  font-bold py-2 px-4 rounded-full cursor-pointer" 
+ 
   >
-    <MagnifyingGlassIcon height="16" width="16" />
+     <IconButton size="1" variant="ghost" 
+     className="hover:bg-blue-300  text-white  font-bold py-2 px-4 rounded-full cursor-pointer">
+     <MagnifyingGlassIcon height="16" width="16" />
+
+     </IconButton>
   </TextField.Slot>
 </TextField.Root>
 
@@ -83,18 +97,50 @@ export default function PokemonList() {
           Search
         </button>
       </div> */}
-      <div className="grid grid-cols-4 gap-4 mt-10">
-        {pokemonNames.map((name,index) => {
+      <div 
+     // className="grid grid-cols-4 gap-4 mt-10 ml-auto mr-auto"
+      className="flex flex-wrap justify-center mt-10"
+      >
+        {pokemon?.map((p,i) => {
+          //console.log(p)
           return (
-          <Link key={name} href={`/pokemon/${name}`} className="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg">
-           
-              <Image
-                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${index + 1}.png`}
-                alt={name}
-                width={300}
-                height={300}
+          <Link 
+          className="w-3/4 sm:w-1/2 md:w-1/4 lg:w-1/6 p-4 mx-2 my-2"
+             key={p?.url} 
+             href={`/pokemon/${p?.name}`} 
+             //className="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg"
+          >
+         <Box maxWidth="200px"
+         className=""
+         >
+  <Card>
+    <Flex gap="3" align="center" direction="column">
+      <Avatar
+        size="5"
+        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${i + 1}.png`}
+        radius="none"
+        fallback={p?.name}
+      />
+      <Box>
+        <Text as="div" size="2" weight="bold"
+        className='capitalize ' 
+        //style={{backgroundColor: 'yellow'}}
+        >
+          {p?.name}
+        </Text>
+       
+      </Box>
+    </Flex>
+  </Card>
+</Box> 
+              {/* <Image
+              //src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${i + 1}.svg`}
+                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${i + 1}.png`}
+                alt={p?.name}
+                width={200}
+                height={200}
               />
-              <div className="text-lg font-semibold text-gray-800">{name}</div>
+              <div className="text-lg font-semibold text-gray-800">{p?.name}</div> */}
          
           </Link>
           );
