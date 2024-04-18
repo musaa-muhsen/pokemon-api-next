@@ -18,7 +18,7 @@ export default function PokemonList() {
   
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
   const [searchString, setSearchString] = useState("");
-  console.log('pokemon',pokemon);
+ // console.log('pokemon',pokemon);
   //console.log("pokemonNames", pokemonNames);
  // console.log('searchResults', searchResults)
   
@@ -32,7 +32,7 @@ export default function PokemonList() {
 
   const onClick = async () => {
     const data = await searchResults(searchString);
-    console.log('data',data)
+   // console.log('data',data)
     setPokemon(data);
   };
 
@@ -45,7 +45,7 @@ export default function PokemonList() {
   return (
     <>
     <TextField.Root 
-  className=" w-90 mx-auto max-w-2xl"
+  className="mt-8 w-90 mx-auto max-w-2xl"
     value={searchString}
     onKeyDown={handleKeyDown}
     onChange={(e) => setSearchString(e.target.value)}
@@ -69,7 +69,7 @@ export default function PokemonList() {
   </TextField.Slot>
 </TextField.Root>
 
-    {pokemon.length === 0 ? (
+    {pokemon?.length === 0 ? (
       <>
       <div className='flex items-center justify-center h-dvh'>
         <Spinner size="3"/>
@@ -78,27 +78,32 @@ export default function PokemonList() {
       ) : (<> 
       <div 
      // className="grid grid-cols-4 gap-4 mt-10 ml-auto mr-auto"
-      className="flex flex-wrap justify-center mt-10 max-w-[1000px]"
+      className="flex flex-wrap justify-center mt-10 max-w-[1000px] ml-auto mr-auto"
       >
         {pokemon?.map((p,i) => {
           //console.log(p)
+
+          const url = new URL(p?.url);
+const segments = url.pathname.split("/");
+const number = Number(segments[segments.length - 2]); // 24
           return (
             
           <Link 
-          className="w-3/4 sm:w-1/2 md:w-1/4 lg:w-1/6 p-4 mx-2 my-2 flex items-center justify-center"
+          className="w-1/3 sm:w-1/3 md:w-1/4 lg:w-1/6 p-4 mx-2 my-2 flex items-center justify-center"
              key={p?.url} 
              href={`/pokemon/${p?.name}`} 
              //className="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg"
           >
             
-         <Box maxWidth="200px"
-         className=""
+         <Box 
+         maxWidth="200px"
+         
          >
-  <Card>
+  <Card className="p-3 hover:bg-slate-200 rounded-lg">
     <Flex gap="3" align="center" direction="column">
     <Image
               //src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${i + 1}.svg`}
-                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${i + 1}.png`}
+                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${number}.png`}
                 alt={p?.name}
                 width={70}
                 height={70}
@@ -106,7 +111,7 @@ export default function PokemonList() {
                   objectFit: 'contain', // cover, contain, none
                 }}
                 placeholder="blur"
-                blurDataURL={'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAACCAYAAAB/qH1jAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAJ0lEQVR4nGPY2fXjv458/H9Bbtf/IDbD/7v//8/Mvfq/J+nEfxAbAF3NFsFiuaE1AAAAAElFTkSuQmCC'}
+                blurDataURL={'data:image/jpeg;base64,/9j/4AAQSkZJRgABAgEASABIAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAAyADIDAREAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9B6/aD81CgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKAA/9k='}
                 //placeholder="blur" // Optional blur-up while loading
                // blurDataURL={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${i + 1}.png`
         
@@ -130,6 +135,9 @@ export default function PokemonList() {
       </>)
 
 }
+<p className='text-center mb-10'>
+          <a className='underline text-black uppercase' href='https://www.musaamuhsen.co.uk/'  target="_blank" 
+            rel="noopener noreferrer">musaamuhsen.co.uk</a> &copy; {new Date().getFullYear()}</p>
     </>
   );
 }

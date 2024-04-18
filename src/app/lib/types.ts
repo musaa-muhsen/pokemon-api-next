@@ -6,7 +6,8 @@ export type Pokemon = {
 
   export type PokemonSingle = {
     name: string;
-    order: number;
+    id: number;
+    types: { name: string }[];
     imageUrl: string;
     stats: { name: string; value: number }[];
     abilities: { name: string; description: string }[];

@@ -19,12 +19,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-          
       <body className={inter.className} >
         <Theme>{children}</Theme>
-        <p className='text-center mb-8'>
-          <a className='no-underline text-black uppercase' href='https://www.musaamuhsen.co.uk/'  target="_blank" 
-            rel="noopener noreferrer">musaamuhsen.co.uk</a> &copy; 2024</p>
       </body>
     </html>
   );

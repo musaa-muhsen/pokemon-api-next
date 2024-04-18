@@ -14,7 +14,7 @@ export async function searchResults(search: string) {
         return item?.name?.toLowerCase().includes(search.toLowerCase())
       })
       .map((item: Pokemon) => {
-        console.log('@@@@item map',item)
+       // console.log('@@@@item map',item)
         return item
       })
       .slice(0, 200);
@@ -25,7 +25,7 @@ export async function searchResults(search: string) {
   export async function singlePokemonData(id: string): Promise<PokemonSingle> {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
     const data = await response.json();
-    console.log('data',data)
+    //console.log('data',data)
   
   
   
@@ -39,12 +39,17 @@ export async function searchResults(search: string) {
     ) => ({
       name: ability.ability.name,
     }));
+
+    const types = data?.types?.map((type: { type: { name: string } }) => ({
+      name: type.type.name,
+    }));
   
     return {
-      data: data,
+     data: data,
+      types: types,
       name: data?.name,
       id: data?.id,
-      imageUrl: data?.sprites.other["official-artwork"].front_default,
+      imageUrl: data?.sprites?.other?.["official-artwork"]?.front_default,
       stats,
       abilities,
     };
