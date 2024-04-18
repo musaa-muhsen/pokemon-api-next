@@ -45,7 +45,7 @@ export async function searchResults(search: string) {
     }));
   
     return {
-     data: data,
+    // data: data,
       types: types,
       name: data?.name,
       id: data?.id,
