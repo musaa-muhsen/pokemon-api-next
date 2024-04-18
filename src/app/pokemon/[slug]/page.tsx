@@ -2,7 +2,6 @@ import React from 'react'
 //import { notFound } from 'next/navigation';
 import { singlePokemonData } from '@/app/lib/server-utils';
 import Image from 'next/image';
-import ClientPoke from '@/app/components/ClientPoke';
 import { ClientLink } from '@/app/components/ClientLink';
 
 import {Spinner,Skeleton,IconButton,TextField, Box , CheckboxCards, Flex, Text, Avatar, Card} from '@radix-ui/themes';
@@ -32,17 +31,14 @@ const typeColor: Record<string, string> = {
 
 
 function getPalerColor(color: string): string {
-  // Convert color from hex to RGB
   const rgbColor = hexToRgb(color);
 
   if (rgbColor === null) {
     console.warn(`Invalid hex color: ${color}`);
-    return color; // Return the original color if conversion fails
+    return color; 
   }
 
-  // Convert the RGB color to RGBA format with an alpha value of 0.3
   const rgbaColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.2)`;
-
   return rgbaColor;
 }
 
@@ -84,9 +80,9 @@ const PokemonPage = async ({
       ) : (
         <>
         <ClientLink />
-    {/* <ClientPoke data={pokemon} /> */}
+  
      <div className="flex items-center justify-center h-screen " 
-     //
+     
      style={{ backgroundColor: `${getPalerColor(typeColor[pokemon?.types?.[0]?.name])}` }} 
      >
 <div className="border-gray-300 border flex flex-col pr-5 pl-5 mx-auto w-[400px]  py-6 bg-white overflow-hidden rounded-2xl	">
